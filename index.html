@@ -348,7 +348,11 @@
                 <ul class="link-list">
                     <li>
                         <a href="https://github.com/EternalCosmic/Automated-Windows-11-ARM-Optimizer" target="_blank" rel="noopener">Siemens NX 1984 Windows 11 ARM Optimizer</a>
-                        <button class="spec-btn" onclick="openModal()">⚡ System Spec Sheet</button>
+                        <button class="spec-btn" onclick="openModal('nxModal')">⚡ System Spec Sheet</button>
+                    </li>
+                    <li>
+                        <a href="#cruiser-spec">1,000-Ton Deep-Space Crewed Cruiser (Siemens NX 1984)</a>
+                        <button class="spec-btn" onclick="openModal('cruiserModal')">🛸 CAD Blueprint Specs</button>
                     </li>
                     <li><a href="https://eternalcosmic.github.io/LiveOrbitSimulatorAstraLuminous/">Live Orbit Simulator Astra Luminous</a></li>
                     <li><a href="https://eternalcosmic.github.io/LiveOrbitSimulatorAstra/">Live Orbit Simulator Astra</a></li>
@@ -400,10 +404,10 @@
         </section>
     </main>
 
-    <!-- PROJECT MODAL POPUP -->
-    <div class="modal-overlay" id="nxModal" onclick="closeModalOnOverlay(event)">
+    <!-- PROJECT MODAL 1: SIEMENS NX ARM OPTIMIZER -->
+    <div class="modal-overlay" id="nxModal" onclick="closeModalOnOverlay(event, 'nxModal')">
         <div class="modal-container">
-            <button class="close-btn" onclick="closeModal()">✕</button>
+            <button class="close-btn" onclick="closeModal('nxModal')">✕</button>
             <div class="modal-badge">NASA L'SPACE CAD Track Technical Innovation</div>
             <h3 class="modal-title">Siemens NX 1984 Windows 11 ARM Optimizer</h3>
             
@@ -440,22 +444,67 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/EternalCosmic/Automate
         </div>
     </div>
 
+    <!-- PROJECT MODAL 2: 1,000-TON CREWED SPACESHIP CAD BLUEPRINT -->
+    <div class="modal-overlay" id="cruiserModal" onclick="closeModalOnOverlay(event, 'cruiserModal')">
+        <div class="modal-container">
+            <button class="close-btn" onclick="closeModal('cruiserModal')">✕</button>
+            <div class="modal-badge">Siemens NX 1984 Designcenter CAD Assembly</div>
+            <h3 class="modal-title">1,000-Ton Deep-Space Crewed Cruiser</h3>
+            
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                Master parametric CAD assembly modeling an interplanetary deep-space cruiser, engineered with high mass-fraction efficiency, 200MWe nuclear thermal rejection, and 62.3 km/s Δv ion propulsion.
+            </p>
+
+            <div class="spec-grid">
+                <div class="spec-box">
+                    <strong>Wet Mass / Delta-v</strong>
+                    <span>1,000 Tons | ~62,378 m/s Δv</span>
+                </div>
+                <div class="spec-box">
+                    <strong>Propulsion System</strong>
+                    <span>40x Grid Matrix Ion Thrusters (Isp = 3,000s)</span>
+                </div>
+                <div class="spec-box">
+                    <strong>Power Plant</strong>
+                    <span>200 MWe Nuclear Fission Reactor</span>
+                </div>
+                <div class="spec-box">
+                    <strong>Mass Fraction</strong>
+                    <span>88% Xenon | 7% Dry | 5% Payload</span>
+                </div>
+            </div>
+
+            <h4 style="color: var(--accent-starlight); margin-bottom: 0.5rem; font-family: var(--font-heading);">Siemens NX Core Geometry & Bounding Box Coordinates:</h4>
+            <div class="code-block">Global Origin (0,0,0): Rear Ion Thruster Exit Plane Center
+Longitudinal Axis: Z-Axis | Overall Vehicle Length: 80.0m
+
+• Ion Thruster Matrix : Cylinder | Dia: 6.0m  | Length: 3.0m  | Z = 0.0m to 3.0m
+• 200MW Reactor       : Cylinder | Dia: 4.5m  | Length: 8.0m  | Z = 3.0m to 11.0m
+• Shadow Shield       : Cone     | Dia: 5-9.5m| Length: 2.5m  | Z = 11.0m to 13.5m
+• Structural Spine    : Triangular Truss      | Buffer Length: 21.5m
+• Xenon Tank Farm     : 4x Spheres | Dia: 5.75m (CoG Center: Z = 45.0m)
+• Crew Habitat Module : Cylinder | Dia: 7.0m  | Length: 15.0m | Z = 65.0m to 80.0m
+• Thermal Management  : 25,000 m² Deployable Radiator Wings
+• Armor Mitigation    : Sacrificial Whipple Shields (Aluminum/Kevlar)</div>
+        </div>
+    </div>
+
     <footer>
         &copy; 2026 Eternal Cosmic. Curated by Katie Carlson. Built for Infinite Learning across the Spheres.
     </footer>
 
     <script>
-        function openModal() {
-            document.getElementById('nxModal').classList.add('active');
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
         }
 
-        function closeModal() {
-            document.getElementById('nxModal').classList.remove('active');
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
         }
 
-        function closeModalOnOverlay(e) {
+        function closeModalOnOverlay(e, modalId) {
             if (e.target.classList.contains('modal-overlay')) {
-                closeModal();
+                closeModal(modalId);
             }
         }
     </script>
