@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eternal Cosmic | Academic Infinity Portal</title>
     <!-- Google Fonts for Cinzel Headings and Inter Body -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -24,6 +24,7 @@
             /* Typography */
             --font-heading: 'Cinzel', 'Trajan Pro', serif;
             --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-code: 'Fira Code', monospace;
         }
 
         body {
@@ -141,7 +142,10 @@
         }
 
         .link-list li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
         }
 
         .link-list a {
@@ -170,6 +174,147 @@
 
         .wellness .link-list a::before {
             color: var(--accent-nebula);
+        }
+
+        .spec-btn {
+            background: rgba(114, 239, 221, 0.1);
+            border: 1px solid var(--accent-crystal);
+            color: var(--accent-crystal);
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 1.5rem;
+            align-self: flex-start;
+            transition: all 0.2s ease;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .spec-btn:hover {
+            background: var(--accent-crystal);
+            color: var(--bg-space);
+            box-shadow: 0 0 10px rgba(114, 239, 221, 0.4);
+        }
+
+        /* MODAL STYLES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(7, 9, 19, 0.85);
+            backdrop-filter: blur(16px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background: var(--bg-surface-glass);
+            border: 1px solid var(--accent-crystal);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2.5rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-crystal);
+        }
+
+        .modal-title {
+            font-family: var(--font-heading);
+            color: var(--accent-crystal);
+            font-size: 1.8rem;
+            margin-top: 0;
+            letter-spacing: 1px;
+        }
+
+        .modal-badge {
+            display: inline-block;
+            background: rgba(157, 78, 221, 0.2);
+            border: 1px solid var(--accent-nebula);
+            color: var(--accent-starlight);
+            font-size: 0.8rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .spec-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .spec-box strong {
+            display: block;
+            color: var(--accent-starlight);
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .spec-box span {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .code-block {
+            background: #000000;
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            color: var(--accent-crystal);
+            overflow-x: auto;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+            word-break: break-all;
         }
 
         footer {
@@ -201,7 +346,10 @@
                 <h2 class="sector-title">🚀 Orbital Sectors</h2>
                 <p class="sector-desc">Live simulation mechanics, telemetry systems, virtualized CAD automation, and C&DH engineering modules designed for planetary exploration and spacecraft mission design.</p>
                 <ul class="link-list">
-                    <li><a href="https://github.com/EternalCosmic/Automated-Windows-11-ARM-Optimizer" target="_blank" rel="noopener">Siemens NX 1984 Windows 11 ARM Optimizer</a></li>
+                    <li>
+                        <a href="https://github.com/EternalCosmic/Automated-Windows-11-ARM-Optimizer" target="_blank" rel="noopener">Siemens NX 1984 Windows 11 ARM Optimizer</a>
+                        <button class="spec-btn" onclick="openModal()">⚡ System Spec Sheet</button>
+                    </li>
                     <li><a href="https://eternalcosmic.github.io/LiveOrbitSimulatorAstraLuminous/">Live Orbit Simulator Astra Luminous</a></li>
                     <li><a href="https://eternalcosmic.github.io/LiveOrbitSimulatorAstra/">Live Orbit Simulator Astra</a></li>
                     <li><a href="https://eternalcosmic.github.io/Rocket-Science-Orbital-Mechanics-Webinar-/index.html">Orbital Mechanics Webinar Architecture</a></li>
@@ -252,9 +400,65 @@
         </section>
     </main>
 
+    <!-- PROJECT MODAL POPUP -->
+    <div class="modal-overlay" id="nxModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal-container">
+            <button class="close-btn" onclick="closeModal()">✕</button>
+            <div class="modal-badge">NASA L'SPACE CAD Track Technical Innovation</div>
+            <h3 class="modal-title">Siemens NX 1984 Windows 11 ARM Optimizer</h3>
+            
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                Architected to eliminate x86_64 CAD execution barriers on Apple Silicon (M1–M4) hardware running virtualized Windows 11 ARM environments. Resolves storage exhaustion during assembly unpacking and bypasses uncertified virtual GPU rendering halts.
+            </p>
+
+            <div class="spec-grid">
+                <div class="spec-box">
+                    <strong>Target Architecture</strong>
+                    <span>ARM64 (Apple Silicon M1–M4)</span>
+                </div>
+                <div class="spec-box">
+                    <strong>Emulation Layer</strong>
+                    <span>Microsoft Prism x64 Translation</span>
+                </div>
+                <div class="spec-box">
+                    <strong>Storage Standard</strong>
+                    <span>100 GB Virtual Disk (NVMe/SCSI)</span>
+                </div>
+                <div class="spec-box">
+                    <strong>License Server Variable</strong>
+                    <span>SPLM_LICENSE_SERVER (28000)</span>
+                </div>
+            </div>
+
+            <h4 style="color: var(--accent-starlight); margin-bottom: 0.5rem; font-family: var(--font-heading);">One-Command Turnkey Deployment:</h4>
+            <div class="code-block">Set-ExecutionPolicy Unrestricted -Scope Process
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/EternalCosmic/Automated-Windows-11-ARM-Optimizer/main/Optimize-NX1984.ps1" -OutFile "Optimize-NX1984.ps1"; .\Optimize-NX1984.ps1</div>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                <a href="https://github.com/EternalCosmic/Automated-Windows-11-ARM-Optimizer" target="_blank" rel="noopener" style="background: var(--accent-crystal); color: var(--bg-space); padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">View GitHub Repository ➔</a>
+            </div>
+        </div>
+    </div>
+
     <footer>
         &copy; 2026 Eternal Cosmic. Curated by Katie Carlson. Built for Infinite Learning across the Spheres.
     </footer>
+
+    <script>
+        function openModal() {
+            document.getElementById('nxModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('nxModal').classList.remove('active');
+        }
+
+        function closeModalOnOverlay(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeModal();
+            }
+        }
+    </script>
 
 </body>
 </html>
