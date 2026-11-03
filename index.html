@@ -198,6 +198,73 @@
             box-shadow: 0 0 10px rgba(114, 239, 221, 0.4);
         }
 
+        /* FORM STYLES FOR RESORT INQUIRY */
+        .inquiry-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: var(--accent-starlight);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            background: rgba(7, 9, 19, 0.75);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            border-color: var(--accent-crystal);
+            box-shadow: 0 0 8px rgba(114, 239, 221, 0.25);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent-nebula), var(--accent-crystal));
+            color: var(--bg-space);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(114, 239, 221, 0.4);
+        }
+
         /* MODAL STYLES */
         .modal-overlay {
             position: fixed;
@@ -325,6 +392,12 @@
             border-top: 1px solid var(--border-glass);
             letter-spacing: 1px;
         }
+
+        @media (max-width: 600px) {
+            .inquiry-form {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -351,7 +424,7 @@
                         <button class="spec-btn" onclick="openModal('nxModal')">⚡ System Spec Sheet</button>
                     </li>
                     <li>
-                        <a href="#cruiser-spec">1,000-Ton Deep-Space Crewed Cruiser (Siemens NX 1984)</a>
+                        <a href="#cruiserModal" onclick="openModal('cruiserModal'); return false;">1,000-Ton Deep-Space Crewed Cruiser (Siemens NX 1984)</a>
                         <button class="spec-btn" onclick="openModal('cruiserModal')">🛸 CAD Blueprint Specs</button>
                     </li>
                     <li><a href="https://eternalcosmic.github.io/LiveOrbitSimulatorAstraLuminous/">Live Orbit Simulator Astra Luminous</a></li>
@@ -389,18 +462,46 @@
                 🪷 Resort Residencies & Sound Healing Immersion
             </h2>
             
-            <p class="sector-desc" style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.6;">
+            <p class="sector-desc" style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;">
                 Combining 200-hour certified Vinyasa/Hatha instruction with the acoustic precision of 8 crystal singing bowls tuned to cosmic frequency scales. Available for seasonal residencies in Bali, Central America, the Himalayas, and global luxury eco-resorts.
             </p>
             
-            <!-- Styled Cal.com Embed Container -->
-            <div class="booking-widget-container" style="width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-glass); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); background: #000000;">
-                <iframe 
-                    src="https://cal.com/resort-residency-sound-immersion-inquiry?theme=dark" 
-                    style="width: 100%; height: 720px; border: none; display: block;" 
-                    title="Book a Resort Consultation">
-                </iframe>
-            </div>
+            <!-- Native Integrated Form Replacing Error-Prone Iframe -->
+            <form class="inquiry-form" onsubmit="handleInquirySubmit(event)">
+                <div class="form-group">
+                    <label for="contact-name">Full Name</label>
+                    <input type="text" id="contact-name" required placeholder="e.g. Elena Rostova">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact-email">Email Address</label>
+                    <input type="email" id="contact-email" required placeholder="name@resort.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="resort-name">Resort / Organization Name</label>
+                    <input type="text" id="resort-name" placeholder="e.g. Aman / Six Senses / Private Sanctuary">
+                </div>
+
+                <div class="form-group">
+                    <label for="inquiry-type">Inquiry Type</label>
+                    <select id="inquiry-type">
+                        <option value="seasonal-residency">Seasonal Residency</option>
+                        <option value="sound-bath-workshop">Sound Bath Immersion / Workshop</option>
+                        <option value="private-retreat">Private Retreat Curation</option>
+                        <option value="general-partnership">General Partnership</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="message">Proposed Timeline & Target Dates</label>
+                    <textarea id="message" rows="4" placeholder="Share details about proposed dates, location, guest capacity, or specific sound immersion requests..."></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <button type="submit" class="submit-btn">Transmit Residency Inquiry ➔</button>
+                </div>
+            </form>
         </section>
     </main>
 
@@ -506,6 +607,12 @@ Longitudinal Axis: Z-Axis | Overall Vehicle Length: 80.0m
             if (e.target.classList.contains('modal-overlay')) {
                 closeModal(modalId);
             }
+        }
+
+        function handleInquirySubmit(e) {
+            e.preventDefault();
+            alert("Thank you for your inquiry. Your resonance details have been recorded and will be reviewed promptly.");
+            e.target.reset();
         }
     </script>
 
