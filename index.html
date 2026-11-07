@@ -378,6 +378,7 @@
     </style>
 </head>
 <body>
+    <canvas id="cosmic-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></canvas>
 
     <nav>
         <a href="https://eternalcosmic.github.io/Eternal-Cosmic-Infinity-Portal/" class="nav-logo">Eternal Cosmic</a>
@@ -515,20 +516,20 @@
                 </div>
             </div>
 
-            <!-- CRYSTAL BOWL ACOUSTIC AUDIO PLAYER -->
-            <div style="background: rgba(0, 0, 0, 0.5); border: 1px solid var(--accent-crystal); border-radius: 12px; padding: 1.5rem; margin-bottom: 2.5rem; text-align: center;">
-                <h3 style="font-family: var(--font-heading); color: var(--accent-crystal); font-size: 1.2rem; margin-top: 0; letter-spacing: 1px;">
-                    🥣 8-Bowl Acoustic Frequency Preview (432Hz / 528Hz)
-                </h3>
-                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
-                    Experience the resonant sound bath waves designed for somatic reset.
-                </p>
-                <audio controls loop style="width: 100%; max-width: 500px; outline: none; border-radius: 30px;">
-                    <source src="assets/crystal-bowls-528hz.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
-
+           <!-- CRYSTAL BOWL ACOUSTIC AUDIO PLAYER -->
+<div style="background: rgba(0, 0, 0, 0.5); border: 1px solid var(--accent-crystal); border-radius: 12px; padding: 1.5rem; margin-bottom: 2.5rem; text-align: center;">
+    <h3 style="font-family: var(--font-heading); color: var(--accent-crystal); font-size: 1.2rem; margin-top: 0; letter-spacing: 1px;">
+        🥣 8-Bowl Acoustic Frequency Preview (432Hz / 528Hz)
+    </h3>
+    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+        Experience the resonant sound bath waves designed for somatic reset.
+    </p>
+    <audio controls loop style="width: 100%; max-width: 500px; outline: none; border-radius: 30px;">
+        <!-- Replace audio-file.mp3 with your actual crystal bowl audio file link or local asset -->
+        <source src="assets/crystal-bowls-528hz.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</div>
             
             <!-- CURATED OFFERINGS LIST -->
             <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem; margin-bottom: 2.5rem;">
@@ -599,5 +600,65 @@
             if (e.target.classList.contains('modal-overlay')) { closeModal(modalId); }
         }
     </script>
+
+<script>
+    // COSMIC STARFIELD ANIMATION
+    const canvas = document.getElementById('cosmic-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let stars = [];
+    const numStars = 180;
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Star {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 1.8 + 0.2;
+            this.alpha = Math.random();
+            this.speed = Math.random() * 0.015 + 0.005;
+            // Palette matches --accent-crystal and --accent-starlight
+            this.color = Math.random() > 0.5 ? '#72efdd' : '#e0aaff';
+        }
+        update() {
+            this.alpha += this.speed;
+            if (this.alpha > 1 || this.alpha < 0) {
+                this.speed = -this.speed;
+            }
+        }
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = Math.abs(this.alpha);
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    for (let i = 0; i < numStars; i++) {
+        stars.push(new Star());
+    }
+
+    function animateCosmos() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(star => {
+            star.update();
+            star.draw();
+        });
+        requestAnimationFrame(animateCosmos);
+    }
+    animateCosmos();
+</script>
 </body>
 </html>
