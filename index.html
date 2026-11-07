@@ -42,6 +42,50 @@
             line-height: 1.6;
         }
 
+        /* Top Sticky Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 3rem;
+            background: rgba(7, 9, 19, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-glass);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--accent-crystal);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-crystal);
+        }
+
         header {
             padding: 4rem 2rem;
             text-align: center;
@@ -335,6 +379,15 @@
 </head>
 <body>
 
+    <nav>
+        <a href="https://eternalcosmic.github.io/Eternal-Cosmic-Infinity-Portal/" class="nav-logo">Eternal Cosmic</a>
+        <ul class="nav-links">
+            <li><a href="https://eternalcosmic.github.io/Eternal-Cosmic-Infinity-Portal/" class="active">Portal Home</a></li>
+            <li><a href="https://eternalcosmic.github.io/Eternal-Cosmic-Infinity-Resumes/" target="_blank" rel="noopener">Resumes & Bio</a></li>
+            <li><a href="#resort-partnerships">Residencies</a></li>
+        </ul>
+    </nav>
+
     <header>
         <h1>Eternal Cosmic</h1>
         <div class="subtitle">Academic Infinity Portal</div>
@@ -345,43 +398,28 @@
     </header>
 
     <main>
-        <!-- PROFESSIONAL MANIFEST & RESUME HUB -->
+
+        <!-- UPDATED PROFESSIONAL MANIFEST & RESUMES HUB -->
         <section class="glass-card tech" style="margin-bottom: 3rem;">
             <h2 class="sector-title" style="display: flex; align-items: center; gap: 10px;">
-                <span>📄</span> Professional Manifest & Biographies
+                <span>📄</span> Professional Manifest & Resumes
             </h2>
             <p class="sector-desc">
-                Access specialized credentials tailored for NASA Flight Operations, digital humanities grants, and international acoustic wellness residencies.
+                Access specialized credentials tailored for NASA Flight Operations, digital humanities grants, and international acoustic wellness residencies hosted on our dedicated resume portal.
             </p>
             <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
                 
-                <!-- Master Resume -->
-                <a href="./Katie_Carlson_Master_Resume.pdf" download target="_blank" rel="noopener" 
-                   style="background: rgba(114, 239, 221, 0.1); border: 1px solid var(--accent-crystal); color: var(--accent-crystal); padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem;"
-                   onmouseover="this.style.background='var(--accent-crystal)'; this.style.color='var(--bg-space)'; this.style.boxShadow='0 0 10px rgba(114, 239, 221, 0.4)'"
-                   onmouseout="this.style.background='rgba(114, 239, 221, 0.1)'; this.style.color='var(--accent-crystal)'; this.style.boxShadow='none'">
-                    <span>📋</span> Master Resume (PDF)
-                </a>
-
-                <!-- NASA Federal Resume -->
-                <a href="./Katie_Carlson_NASA_Federal_Resume.pdf" download target="_blank" rel="noopener" 
-                   style="background: rgba(114, 239, 221, 0.1); border: 1px solid var(--accent-crystal); color: var(--accent-crystal); padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem;"
-                   onmouseover="this.style.background='var(--accent-crystal)'; this.style.color='var(--bg-space)'; this.style.boxShadow='0 0 10px rgba(114, 239, 221, 0.4)'"
-                   onmouseout="this.style.background='rgba(114, 239, 221, 0.1)'; this.style.color='var(--accent-crystal)'; this.style.boxShadow='none'">
-                    <span>🚀</span> NASA Federal Resume (PDF)
-                </a>
-
-                <!-- Yoga & Sound Practitioner Resume -->
-                <a href="./Katie_Carlson_Yoga_Sound_Resume.pdf" download target="_blank" rel="noopener" 
-                   style="background: rgba(157, 78, 221, 0.1); border: 1px solid var(--accent-nebula); color: var(--accent-starlight); padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem;"
-                   onmouseover="this.style.background='var(--accent-nebula)'; this.style.color='var(--text-primary)'; this.style.boxShadow='0 0 10px rgba(157, 78, 221, 0.4)'"
-                   onmouseout="this.style.background='rgba(157, 78, 221, 0.1)'; this.style.color='var(--accent-starlight)'; this.style.boxShadow='none'">
-                    <span>🧘‍♀️</span> Yoga & Sound Practitioner Resume (PDF)
+                <!-- Main Link to Dedicated Resume Page -->
+                <a href="https://eternalcosmic.github.io/Eternal-Cosmic-Infinity-Resumes/" target="_blank" rel="noopener" 
+                   style="background: var(--accent-crystal); color: var(--bg-space); padding: 0.7rem 1.4rem; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 0 15px rgba(114, 239, 221, 0.4);"
+                   onmouseover="this.style.boxShadow='0 0 22px rgba(114, 239, 221, 0.7)'"
+                   onmouseout="this.style.boxShadow='0 0 15px rgba(114, 239, 221, 0.4)'">
+                    <span>📋</span> Explore Resume Portal ➔
                 </a>
 
                 <!-- Git Credentials Link -->
                 <a href="https://github.com/EternalCosmic" target="_blank" rel="noopener"
-                   style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-glass); color: var(--text-primary); padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem;"
+                   style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-glass); color: var(--text-primary); padding: 0.7rem 1.4rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem;"
                    onmouseover="this.style.borderColor='var(--accent-crystal)'; this.style.color='var(--accent-crystal)'"
                    onmouseout="this.style.borderColor='var(--border-glass)'; this.style.color='var(--text-primary)'">
                     <span>💻</span> Git Credentials
@@ -439,7 +477,6 @@
             <ul class="link-list">
                 <li>
                     <a href="https://eternalcosmic.github.io/Infinity-Library-/" target="_blank" rel="noopener">The Eternal Cosmic Infinity Library</a>
-                    <button class="spec-btn" onclick="openModal('libraryModal')">📚 Library Schema Specs</button>
                 </li>
             </ul>
         </section>
@@ -508,88 +545,29 @@
         </section>
     </main>
 
-    <!-- PROJECT MODAL 1: SIEMENS NX ARM OPTIMIZER -->
+    <!-- PROJECT MODALS -->
     <div class="modal-overlay" id="nxModal" onclick="closeModalOnOverlay(event, 'nxModal')">
         <div class="modal-container">
             <button class="close-btn" onclick="closeModal('nxModal')">✕</button>
             <div class="modal-badge">NASA L'SPACE CAD Track Technical Innovation</div>
             <h3 class="modal-title">Siemens NX 1984 Windows 11 ARM Optimizer</h3>
-            
             <p style="color: var(--text-secondary); font-size: 0.95rem;">
                 Architected to eliminate x86_64 CAD execution barriers on Apple Silicon (M1–M4) hardware running virtualized Windows 11 ARM environments. Resolves storage exhaustion during assembly unpacking and bypasses uncertified virtual GPU rendering halts.
             </p>
-
-            <div class="spec-grid">
-                <div class="spec-box">
-                    <strong>Target Architecture</strong>
-                    <span>ARM64 (Apple Silicon M1–M4)</span>
-                </div>
-                <div class="spec-box">
-                    <strong>Emulation Layer</strong>
-                    <span>Microsoft Prism x64 Translation</span>
-                </div>
-                <div class="spec-box">
-                    <strong>Storage Standard</strong>
-                    <span>100 GB Virtual Disk (NVMe/SCSI)</span>
-                </div>
-                <div class="spec-box">
-                    <strong>License Server Variable</strong>
-                    <span>SPLM_LICENSE_SERVER (28000)</span>
-                </div>
-            </div>
-
-            <h4 style="color: var(--accent-starlight); margin-bottom: 0.5rem; font-family: var(--font-heading);">One-Command Turnkey Deployment:</h4>
-            <div class="code-block">Set-ExecutionPolicy Unrestricted -Scope Process
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/EternalCosmic/Automated-Windows-11-ARM-Optimizer/main/Optimize-NX1984.ps1" -OutFile "Optimize-NX1984.ps1"; .\Optimize-NX1984.ps1</div>
-
-            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+            <div style="margin-top: 2rem;">
                 <a href="https://github.com/EternalCosmic/Automated-Windows-11-ARM-Optimizer" target="_blank" rel="noopener" style="background: var(--accent-crystal); color: var(--bg-space); padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">View GitHub Repository ➔</a>
             </div>
         </div>
     </div>
 
-    <!-- PROJECT MODAL 2: 1,000-TON CREWED SPACESHIP CAD BLUEPRINT -->
     <div class="modal-overlay" id="cruiserModal" onclick="closeModalOnOverlay(event, 'cruiserModal')">
         <div class="modal-container">
             <button class="close-btn" onclick="closeModal('cruiserModal')">✕</button>
             <div class="modal-badge">Siemens NX 1984 Designcenter CAD Assembly</div>
             <h3 class="modal-title">1,000-Ton Deep-Space Crewed Cruiser</h3>
-            
             <p style="color: var(--text-secondary); font-size: 0.95rem;">
                 Master parametric CAD assembly modeling an interplanetary deep-space cruiser, engineered with high mass-fraction efficiency, 200MWe nuclear thermal rejection, and 62.3 km/s Δv ion propulsion.
             </p>
-
-            <div class="spec-grid">
-                <div class="spec-box">
-                    <strong>Wet Mass / Delta-v</strong>
-                    <span>1,000 Tons | ~62,378 m/s Δv</span>
-                </div>
-                <div class="spec-box">
-                    <strong>Propulsion System</strong>
-                    <span>40x Grid Matrix Ion Thrusters (Isp = 3,000s)</span>
-                </div>
-                <div class="spec-box">
-                    <strong>Power Plant</strong>
-                    <span>200 MWe Nuclear Fission Reactor</span>
-                </div>
-                <div class="spec-box">
-                    <strong>Mass Fraction</strong>
-                    <span>88% Xenon | 7% Dry | 5% Payload</span>
-                </div>
-            </div>
-
-            <h4 style="color: var(--accent-starlight); margin-bottom: 0.5rem; font-family: var(--font-heading);">Siemens NX Core Geometry & Bounding Box Coordinates:</h4>
-            <div class="code-block">Global Origin (0,0,0): Rear Ion Thruster Exit Plane Center
-Longitudinal Axis: Z-Axis | Overall Vehicle Length: 80.0m
-
-- Ion Thruster Matrix : Cylinder | Dia: 6.0m  | Length: 3.0m  | Z = 0.0m to 3.0m
-- 200MW Reactor        : Cylinder | Dia: 4.5m  | Length: 8.0m  | Z = 3.0m to 11.0m
-- Shadow Shield        : Cone     | Dia: 5-9.5m| Length: 2.5m  | Z = 11.0m to 13.5m
-- Structural Spine    : Triangular Truss      | Buffer Length: 21.5m
-- Xenon Tank Farm      : 4x Spheres | Dia: 5.75m (CoG Center: Z = 45.0m)
-- Crew Habitat Module : Cylinder | Dia: 7.0m  | Length: 15.0m | Z = 65.0m to 80.0m
-- Thermal Management  : 25,000 m² Deployable Radiator Wings
-- Armor Mitigation    : Sacrificial Whipple Shields (Aluminum/Kevlar)</div>
         </div>
     </div>
 
@@ -598,18 +576,10 @@ Longitudinal Axis: Z-Axis | Overall Vehicle Length: 80.0m
     </footer>
 
     <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
+        function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
+        function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
         function closeModalOnOverlay(e, modalId) {
-            if (e.target.classList.contains('modal-overlay')) {
-                closeModal(modalId);
-            }
+            if (e.target.classList.contains('modal-overlay')) { closeModal(modalId); }
         }
     </script>
 </body>
