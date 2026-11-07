@@ -516,41 +516,22 @@
                 </div>
             </div>
 
-<!-- DIVINE 8-BOWL ACOUSTIC FREQUENCY GENERATOR -->
-<div style="background: rgba(0, 0, 0, 0.6); border: 1px solid var(--accent-crystal); border-radius: 16px; padding: 2rem; margin-bottom: 2.5rem; text-align: center; box-shadow: 0 0 25px rgba(114, 239, 221, 0.15);">
-    <h3 style="font-family: var(--font-heading); color: var(--accent-crystal); font-size: 1.3rem; margin-top: 0; letter-spacing: 1.5px;">
-        🥣 8-Bowl Acoustic Crystal Resonance (432Hz / 528Hz)
-    </h3>
-    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-        Synthesized live audio bath generating multi-vibrational harmonic resonance across 8 tuned quartz crystal singing bowl frequencies for deep somatic reset.
-    </p>
-
-    <!-- Play/Pause Controls -->
-    <button id="bowlPlayBtn" onclick="toggleBowlSound()" style="background: linear-gradient(45deg, var(--accent-nebula), var(--accent-crystal)); border: none; color: #070913; font-weight: 700; font-family: var(--font-body); font-size: 0.9rem; padding: 0.8rem 2rem; border-radius: 30px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(114, 239, 221, 0.4);">
-        ▶ Play Sound Bath
-    </button>
-
-    <div id="bowlStatus" style="color: var(--accent-starlight); font-size: 0.85rem; margin-top: 0.8rem; letter-spacing: 0.5px;">
-        Click to activate 8-bowl resonance
-    </div>
-</div>
-
 <script>
-    // WEBAUDIO 8-CRYSTAL BOWL SYNTHESIZER
+    // HIGH-FIDELITY 8-CRYSTAL BOWL ACOUSTIC ENGINE
     let audioCtx = null;
     let isPlaying = false;
     let activeNodes = [];
 
-    // Frequencies representing an 8-Bowl Chakra/Cosmic Matrix tuned to 432Hz & 528Hz harmonics
-    const bowlFrequencies = [
-        136.1,  // Om/Earth Frequency (C#)
-        216.0,  // Root Resonance (432Hz octave)
-        256.0,  // Sacral Harmonic (C)
-        288.0,  // Solar Plexus (D)
-        341.3,  // Heart (F 432Hz)
-        432.0,  // Heart/Cosmic Alignment (A 432Hz)
-        528.0,  // Transformation/Sol (C 528Hz)
-        648.0   // Crown/Higher Consciousness (E)
+    // Master Frequency Map: 8 Bowls tuned to 432Hz / 528Hz Sacred Solfeggio Geometry
+    const bowlConfig = [
+        { name: "1st Bowl - Root (C#)", freq: 136.1, overtone: 272.2, pan: -0.75 },
+        { name: "2nd Bowl - Sacral (D)",  freq: 144.0, overtone: 288.0, pan: -0.5 },
+        { name: "3rd Bowl - Solar Plexus (E)", freq: 162.0, overtone: 324.0, pan: -0.25 },
+        { name: "4th Bowl - Heart (F#)", freq: 180.0, overtone: 360.0, pan: 0.0 },
+        { name: "5th Bowl - Throat / Om (A - 432Hz)", freq: 216.0, overtone: 432.0, pan: 0.25 },
+        { name: "6th Bowl - Third Eye (B)", freq: 243.0, overtone: 486.0, pan: 0.5 },
+        { name: "7th Bowl - Solfeggio Reset (C - 528Hz)", freq: 264.0, overtone: 528.0, pan: 0.75 },
+        { name: "8th Bowl - Crown (E High)", freq: 324.0, overtone: 648.0, pan: 0.0 }
     ];
 
     function toggleBowlSound() {
@@ -563,45 +544,68 @@
             }
 
             activeNodes = [];
-            
-            // Create warm, rich sine waves with gentle amplitude modulation for each bowl
-            bowlFrequencies.forEach((freq, index) => {
-                let osc = audioCtx.createOscillator();
-                let gainNode = audioCtx.createGain();
-                
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
-                // Subtle LFO (Low Frequency Oscillator) for gentle bowl pulsing/vibration
+            bowlConfig.forEach((bowl, index) => {
+                // Fundamental Tone
+                let fundOsc = audioCtx.createOscillator();
+                fundOsc.type = 'sine';
+                fundOsc.frequency.setValueAtTime(bowl.freq, audioCtx.currentTime);
+
+                // Quartz Harmonic Overtone
+                let overtoneOsc = audioCtx.createOscillator();
+                overtoneOsc.type = 'sine';
+                overtoneOsc.frequency.setValueAtTime(bowl.overtone, audioCtx.currentTime);
+
+                // Individual Bowl Gain
+                let bowlGain = audioCtx.createGain();
+                bowlGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                // Gentle swell-in envelope
+                bowlGain.gain.exponentialRampToValueAtTime(0.025, audioCtx.currentTime + 3 + index);
+
+                // LFO (Low Frequency Modulation for Acoustic Bowl Pulsing)
                 let lfo = audioCtx.createOscillator();
                 let lfoGain = audioCtx.createGain();
-                lfo.frequency.value = 0.1 + (index * 0.03); // slow pulse per bowl
-                lfoGain.gain.value = 0.015;
-                lfo.connect(gainNode.gain);
+                lfo.frequency.value = 0.08 + (index * 0.02); // Slow rhythmic breathing pulse
+                lfoGain.gain.value = 0.008;
+                lfo.connect(bowlGain.gain);
                 lfo.start();
 
-                // Master volume mapping per bowl to prevent clipping
-                gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime);
+                // Stereo Panner (Spatial Sound Stage)
+                let panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+                if (panner) panner.pan.value = bowl.pan;
 
-                osc.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
+                // Routing
+                fundOsc.connect(bowlGain);
+                overtoneOsc.connect(bowlGain);
                 
-                osc.start();
-                activeNodes.push({ osc, gainNode, lfo });
+                if (panner) {
+                    bowlGain.connect(panner);
+                    panner.connect(audioCtx.destination);
+                } else {
+                    bowlGain.connect(audioCtx.destination);
+                }
+
+                fundOsc.start();
+                overtoneOsc.start();
+
+                activeNodes.push({ fundOsc, overtoneOsc, bowlGain, lfo });
             });
 
             isPlaying = true;
             btn.innerHTML = '⏸ Pause Sound Bath';
             btn.style.boxShadow = '0 0 25px rgba(224, 170, 255, 0.7)';
-            status.innerHTML = '✨ 8-Bowl Crystal Frequencies Active';
+            status.innerHTML = '✨ Active: 8 Quartz Bowls (432Hz / 528Hz Spatial Matrix)';
         } else {
+            // Smooth release fading out all nodes
             activeNodes.forEach(node => {
-                node.gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1);
+                node.bowlGain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 2.5);
                 setTimeout(() => {
-                    node.osc.stop();
+                    node.fundOsc.stop();
+                    node.overtoneOsc.stop();
                     node.lfo.stop();
-                }, 1000);
+                }, 2500);
             });
+
             isPlaying = false;
             btn.innerHTML = '▶ Play Sound Bath';
             btn.style.boxShadow = '0 0 15px rgba(114, 239, 221, 0.4)';
