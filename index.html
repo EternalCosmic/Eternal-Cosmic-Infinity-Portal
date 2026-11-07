@@ -516,20 +516,99 @@
                 </div>
             </div>
 
-           <!-- CRYSTAL BOWL ACOUSTIC AUDIO PLAYER -->
-<div style="background: rgba(0, 0, 0, 0.5); border: 1px solid var(--accent-crystal); border-radius: 12px; padding: 1.5rem; margin-bottom: 2.5rem; text-align: center;">
-    <h3 style="font-family: var(--font-heading); color: var(--accent-crystal); font-size: 1.2rem; margin-top: 0; letter-spacing: 1px;">
-        🥣 8-Bowl Acoustic Frequency Preview (432Hz / 528Hz)
+<!-- DIVINE 8-BOWL ACOUSTIC FREQUENCY GENERATOR -->
+<div style="background: rgba(0, 0, 0, 0.6); border: 1px solid var(--accent-crystal); border-radius: 16px; padding: 2rem; margin-bottom: 2.5rem; text-align: center; box-shadow: 0 0 25px rgba(114, 239, 221, 0.15);">
+    <h3 style="font-family: var(--font-heading); color: var(--accent-crystal); font-size: 1.3rem; margin-top: 0; letter-spacing: 1.5px;">
+        🥣 8-Bowl Acoustic Crystal Resonance (432Hz / 528Hz)
     </h3>
-    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
-        Experience the resonant sound bath waves designed for somatic reset.
+    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Synthesized live audio bath generating multi-vibrational harmonic resonance across 8 tuned quartz crystal singing bowl frequencies for deep somatic reset.
     </p>
-    <audio controls loop style="width: 100%; max-width: 500px; outline: none; border-radius: 30px;">
-        <!-- Replace audio-file.mp3 with your actual crystal bowl audio file link or local asset -->
-        <source src="assets/crystal-bowls-528hz.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+
+    <!-- Play/Pause Controls -->
+    <button id="bowlPlayBtn" onclick="toggleBowlSound()" style="background: linear-gradient(45deg, var(--accent-nebula), var(--accent-crystal)); border: none; color: #070913; font-weight: 700; font-family: var(--font-body); font-size: 0.9rem; padding: 0.8rem 2rem; border-radius: 30px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(114, 239, 221, 0.4);">
+        ▶ Play Sound Bath
+    </button>
+
+    <div id="bowlStatus" style="color: var(--accent-starlight); font-size: 0.85rem; margin-top: 0.8rem; letter-spacing: 0.5px;">
+        Click to activate 8-bowl resonance
+    </div>
 </div>
+
+<script>
+    // WEBAUDIO 8-CRYSTAL BOWL SYNTHESIZER
+    let audioCtx = null;
+    let isPlaying = false;
+    let activeNodes = [];
+
+    // Frequencies representing an 8-Bowl Chakra/Cosmic Matrix tuned to 432Hz & 528Hz harmonics
+    const bowlFrequencies = [
+        136.1,  // Om/Earth Frequency (C#)
+        216.0,  // Root Resonance (432Hz octave)
+        256.0,  // Sacral Harmonic (C)
+        288.0,  // Solar Plexus (D)
+        341.3,  // Heart (F 432Hz)
+        432.0,  // Heart/Cosmic Alignment (A 432Hz)
+        528.0,  // Transformation/Sol (C 528Hz)
+        648.0   // Crown/Higher Consciousness (E)
+    ];
+
+    function toggleBowlSound() {
+        const btn = document.getElementById('bowlPlayBtn');
+        const status = document.getElementById('bowlStatus');
+
+        if (!isPlaying) {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            activeNodes = [];
+            
+            // Create warm, rich sine waves with gentle amplitude modulation for each bowl
+            bowlFrequencies.forEach((freq, index) => {
+                let osc = audioCtx.createOscillator();
+                let gainNode = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                // Subtle LFO (Low Frequency Oscillator) for gentle bowl pulsing/vibration
+                let lfo = audioCtx.createOscillator();
+                let lfoGain = audioCtx.createGain();
+                lfo.frequency.value = 0.1 + (index * 0.03); // slow pulse per bowl
+                lfoGain.gain.value = 0.015;
+                lfo.connect(gainNode.gain);
+                lfo.start();
+
+                // Master volume mapping per bowl to prevent clipping
+                gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime);
+
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                activeNodes.push({ osc, gainNode, lfo });
+            });
+
+            isPlaying = true;
+            btn.innerHTML = '⏸ Pause Sound Bath';
+            btn.style.boxShadow = '0 0 25px rgba(224, 170, 255, 0.7)';
+            status.innerHTML = '✨ 8-Bowl Crystal Frequencies Active';
+        } else {
+            activeNodes.forEach(node => {
+                node.gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1);
+                setTimeout(() => {
+                    node.osc.stop();
+                    node.lfo.stop();
+                }, 1000);
+            });
+            isPlaying = false;
+            btn.innerHTML = '▶ Play Sound Bath';
+            btn.style.boxShadow = '0 0 15px rgba(114, 239, 221, 0.4)';
+            status.innerHTML = 'Sound Bath Paused';
+        }
+    }
+</script>
             
             <!-- CURATED OFFERINGS LIST -->
             <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem; margin-bottom: 2.5rem;">
@@ -600,40 +679,44 @@
             if (e.target.classList.contains('modal-overlay')) { closeModal(modalId); }
         }
     </script>
+<canvas id="cosmic-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></canvas>
 
 <script>
-    // COSMIC STARFIELD ANIMATION
     const canvas = document.getElementById('cosmic-canvas');
     const ctx = canvas.getContext('2d');
 
     let stars = [];
-    const numStars = 180;
+    let nebulae = [];
+    const numStars = 220;
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        initNebulae();
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+
+    // DIVINE NEBULA CLOUDS (JWST Style Resonance)
+    function initNebulae() {
+        nebulae = [
+            { x: canvas.width * 0.2, y: canvas.height * 0.3, radius: canvas.width * 0.4, color1: 'rgba(157, 78, 221, 0.15)', color2: 'rgba(7, 9, 19, 0)' },
+            { x: canvas.width * 0.8, y: canvas.height * 0.7, radius: canvas.width * 0.45, color1: 'rgba(114, 239, 221, 0.12)', color2: 'rgba(7, 9, 19, 0)' },
+            { x: canvas.width * 0.5, y: canvas.height * 0.5, radius: canvas.width * 0.35, color1: 'rgba(224, 170, 255, 0.08)', color2: 'rgba(7, 9, 19, 0)' }
+        ];
+    }
 
     class Star {
-        constructor() {
-            this.reset();
-        }
+        constructor() { this.reset(); }
         reset() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 1.8 + 0.2;
+            this.size = Math.random() * 2 + 0.3;
             this.alpha = Math.random();
-            this.speed = Math.random() * 0.015 + 0.005;
-            // Palette matches --accent-crystal and --accent-starlight
-            this.color = Math.random() > 0.5 ? '#72efdd' : '#e0aaff';
+            this.speed = Math.random() * 0.012 + 0.004;
+            this.color = Math.random() > 0.4 ? '#72efdd' : (Math.random() > 0.5 ? '#e0aaff' : '#ffffff');
         }
         update() {
             this.alpha += this.speed;
-            if (this.alpha > 1 || this.alpha < 0) {
-                this.speed = -this.speed;
-            }
+            if (this.alpha > 1 || this.alpha < 0) this.speed = -this.speed;
         }
         draw() {
             ctx.save();
@@ -642,20 +725,42 @@
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
+            
+            // Subtle Starlight Glow for Larger Stars
+            if (this.size > 1.5) {
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = this.color;
+            }
             ctx.restore();
         }
     }
 
-    for (let i = 0; i < numStars; i++) {
-        stars.push(new Star());
-    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < numStars; i++) stars.push(new Star());
 
     function animateCosmos() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#070913';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw Layered Nebulae
+        nebulae.forEach(n => {
+            let gradient = ctx.createRadialGradient(n.x, n.y, 10, n.x, n.y, n.radius);
+            gradient.addColorStop(0, n.color1);
+            gradient.addColorStop(1, n.color2);
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // Draw Twinkling Stars
         stars.forEach(star => {
             star.update();
             star.draw();
         });
+
         requestAnimationFrame(animateCosmos);
     }
     animateCosmos();
